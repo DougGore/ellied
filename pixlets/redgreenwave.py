@@ -15,10 +15,12 @@ class RedGreenWave:
         f = 16
 
         for i in range(Fs):
-            y = int(np.sin(((2 * np.pi * f * i) + t * 1000) / Fs) * 255)
+            y = int(((1. + np.sin((
+                (2 * np.pi * f * i) + t * 1000) / Fs)) / 2.) * 255)
             if y < 0: y = 0
 
-            y2 = int((np.cos(((2 * np.pi * f * (Fs - i)) + t * 1000) / Fs)) * 255)
+            y2 = int(((1. + np.cos((
+                (2 * np.pi * f * (Fs - i)) + t * 1000) / Fs)) / 2.) * 255)
             if y2 < 0: y2 = 0
             
             self.led_array[i] = [y, y2, 0]

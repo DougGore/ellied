@@ -1,0 +1,11 @@
+[Unit]
+Description=Xmas lights autostart service
+
+[Service]
+WorkingDirectory=/home/pi/ellied
+ExecStart="/home/pi/ellied/ellied.py" --time 60
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
+Alias=xmaslights.service

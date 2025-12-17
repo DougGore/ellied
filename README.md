@@ -12,16 +12,23 @@ Ellie D variants of pixlets:
 
 * Standard pixlets
 * Audio pixlets
+* Spacial pixlets (to be implemented)
 
 Standard pixlets are just basic time driven effects with little input from the outside world.
 
 Audio pixlets provide lots of real-time data about an input source allowing for effects that react to parameters like BPM, beats, audio notes, etc.
+
+Spacial pixlets are effects in 3D space that are then mapped onto a 2D strip using a configuration file.
 
 ## Input parameters
 
 * Time
 * Strip length
 
-## Future Improvements
+## Supported platforms
 
-* Support 2D, 3D LED matrices
+Ellie D targets 3 main platforms:
+
+* Desktop PC (simulator)
+* Raspberry Pi
+* Rasperry Pico (to be implemented)

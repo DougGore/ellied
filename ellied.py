@@ -1,4 +1,4 @@
-# !/usr/bin/env python3
+#!/usr/bin/env python3
 
 import importlib
 import pkgutil
@@ -24,6 +24,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--fx")
+    parser.add_argument("--time", type=int, default=5)
     args = parser.parse_args()
 
     led_strip = LedStrip()
@@ -46,37 +47,43 @@ if __name__ == "__main__":
     else:
         fx_class = pixlet_manager.next_pixlet()
     
-    fx = fx_class(led_array)
+    if fx_class is None:
+        print("Effect not found!")
+        fx = None
+    else:
+        fx = fx_class(led_array)
+        
+    fx_timeout = args.time
 
-    fx_timeout = 5
+    if fx:
+        try:
+            print(fx.FX_NAME)
+            while True:
+                fx.render(inputs)
 
-    try:
-        while True:
-            fx.render(inputs)
+                tick = time()
 
-            tick = time()
+                inputs["time"] = tick - start_time
+                inputs["time_delta"] = tick - last_time
+                inputs["frames"] += 1
 
-            inputs["time"] = tick - start_time
-            inputs["time_delta"] = tick - last_time
-            inputs["frames"] += 1
+                last_time = tick
 
-            last_time = tick
+                led_strip.display(led_array)
+                # sleep(50 / 1000.0)
+
+                if multi_fx:
+                    fx_timeout -= inputs["time_delta"]
+
+                    if fx_timeout < 0:
+                        fx_timeout += args.time
+            
+                        fx_class = pixlet_manager.next_pixlet()
+                        fx = fx_class(led_array)
+                        print(fx.FX_NAME)
+        except KeyboardInterrupt:
+            for i in range(len(led_array)):
+                led_array[i] = [0, 0, 0]
 
             led_strip.display(led_array)
-            sleep(50 / 1000.0)
-
-            if multi_fx:
-                fx_timeout -= inputs["time_delta"]
-
-                if fx_timeout < 0:
-                    fx_timeout += 5
-        
-                    fx_class = pixlet_manager.next_pixlet()
-                    fx = fx_class(led_array)
-                    print(fx.FX_NAME)
-    except KeyboardInterrupt:
-        for i in range(len(led_array)):
-            led_array[i] = [0, 0, 0]
-
-        led_strip.display(led_array)
 

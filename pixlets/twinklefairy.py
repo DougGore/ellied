@@ -14,7 +14,10 @@ class TwinkleFairy:
         self.colour_mix = [
             (255, 0, 0),
             (0, 255, 0),
-            (0, 0, 255)
+            (0, 0, 255),
+            (255, 0, 255),
+            (0, 255, 255),
+            (255, 255, 0)
         ]
         self.colour_index = 0
 
@@ -54,13 +57,7 @@ class TwinkleFairy:
             self.drawSparkle(t, range(mid), rn, gn, bn)
             self.drawSparkle(t, range(mid, len(self.led_array)), r, g, b)
 
-            # self.strip.setPixelColor(mid, Color(255, 255, 0))
             self.led_array[mid] = [255, 255, 0]
-
-            # self.strip.show()
-            # sleep(1 / 1000.0)
 
         else:
             self.drawSparkle(t, range(len(self.led_array)), r, g, b)
-            # self.strip.show()
-            # sleep(self.wait_ms / 1000.0)

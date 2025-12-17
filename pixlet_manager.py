@@ -16,7 +16,6 @@ class PixletManager:
         py_path = path.replace("/", ".")
 
         for (a, module, c) in pkgutil.iter_modules([path]):
-            print(a, module, c)
             if c is False:
                 pixlet_class = self.import_pixlet("{}.{}".format(py_path, module))
                 self.pixlet_list[module] = pixlet_class
@@ -35,4 +34,7 @@ class PixletManager:
         return next(self.pixlet_iter)
 
     def get_pixlet(self, name):
-        return self.pixlet_list[name]
+        if name in self.pixlet_list:
+            return self.pixlet_list[name]
+        
+        return None

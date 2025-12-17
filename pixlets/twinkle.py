@@ -16,16 +16,17 @@ class Twinkle:
 
         self.twinkles = list(map(list, zip(indices, values)))
 
-    def render(self, _):
+    def render(self, inputs):
+        t = inputs["time_delta"] * 128
+
         for index, twinkle in enumerate(self.twinkles):
             led, value = twinkle
 
             self.led_array[led] = [value, value, value]
-            # self.twinkles[1] -= 1
 
-            if value == 0:
+            if value <= 0:
                 indices = [i[0] for i in self.twinkles]
                 not_in_S = choice([x for x in range(len(self.led_array)) if x not in indices])
                 self.twinkles[index] = [not_in_S, 255]
             else:
-                twinkle[1] -= 1
+                twinkle[1] -= t
